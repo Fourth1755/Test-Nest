@@ -1,0 +1,22 @@
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+@Entity()
+
+export class Anime {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    name: string;
+
+    @Column()
+    episode: number;
+
+    @Column()
+    image: string;
+
+    @Column()
+    year: number;
+
+    @Column()
+    score: number;
+}
