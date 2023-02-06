@@ -9,18 +9,26 @@ import { Anime } from './entities/anime.entity';
 export class AnimesService {
   constructor(
     @InjectRepository(Anime)
-    private usersRepository: Repository<Anime>,
+    private animeRepository: Repository<Anime>,
   ) {}
-  create(createAnimeDto: CreateAnimeDto) {
-    return 'This action adds a new anime';
+  async create(createAnimeDto: CreateAnimeDto) {
+    const animeExist = await this.animeRepository.findOne({
+      where:{
+        name:createAnimeDto.name,
+      },
+    });
+    if(animeExist){
+      return animeExist;
+    }
+    return await this.animeRepository.save(createAnimeDto);
   }
 
   findAll() {
-    return this.usersRepository.find();
+    return this.animeRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} anime`;
+    return this.animeRepository.findOneById(id);
   }
 
   update(id: number, updateAnimeDto: UpdateAnimeDto) {
