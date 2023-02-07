@@ -45,11 +45,7 @@ export class AnimesService {
     const animeExist = await this.animeRepository.findOneById(id);
     if(animeExist){
       await this.animeRepository.update(id,updateAnimeDto)
-      return await this.animeRepository.findOne({
-        where:{
-          name:updateAnimeDto.name,
-        },
-      });
+      return await this.animeRepository.findOneById(id);
     }else{
       return `Can't find a #${id} anime`;
     }

@@ -13,14 +13,19 @@ describe('AnimesService', () => {
     save: jest.fn().mockImplementation(anime => Promise.resolve(
       anime
     )),
-    findOne: jest.fn().mockImplementation((name,dto)=>Promise.resolve(
-
-      dto
-    )),
-    findOneById: jest.fn().mockImplementation((id,dto)=>Promise.resolve({
-      id,
-      ...dto,
-    })),
+    findOne: jest.fn().mockImplementation((name,dto)=>Promise.resolve(dto)),
+    findOneById: jest.fn().mockImplementation((id)=>{
+      if(id==1){
+        return Promise.resolve({
+          id: 1,
+          name:"Attack on Titan",
+          episode:25,
+          image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+          year:2013,
+          score:8
+        })
+      }
+    }),
     update: jest.fn((id,dto)=>({
       id,
       ...dto,
