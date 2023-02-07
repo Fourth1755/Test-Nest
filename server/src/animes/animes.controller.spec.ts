@@ -39,11 +39,7 @@ describe('AnimesController', () => {
   }
     expect(controller.create(dto)).toEqual({
       id:expect.any(Number),
-      name: dto.name,
-      episode: dto.episode,
-      image: dto.image,
-      year: dto.year,
-      score: dto.score,
+      ...dto
     });
     expect(mockAnimesService.create).toHaveBeenCalledWith(dto)
   });

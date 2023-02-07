@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AnimesModule } from './animes/animes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Anime } from './animes/entities/anime.entity';
+import { TagModule } from './tag/tag.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +16,7 @@ import { Anime } from './animes/entities/anime.entity';
     database: 'testnest',
     entities: [Anime],
     synchronize: true,
-  }),AnimesModule],
+  }),AnimesModule, TagModule],
   controllers: [AppController],
   providers: [AppService],
 })
