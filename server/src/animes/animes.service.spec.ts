@@ -6,11 +6,25 @@ import { Anime } from './entities/anime.entity';
 describe('AnimesService', () => {
   let service: AnimesService;
   const mockAnimeRepository = {
-    create: jest.fn().mockImplementation(dto => dto),
-    save: jest.fn().mockImplementation(anime => Promise.resolve({
-      id:Date.now(), ...anime
+    create: jest.fn().mockImplementation(dto => Promise.resolve({
+      id:Date.now(),
+      ...dto,
     })),
-    findOne: jest.fn().mockImplementation((name,dto)=>dto),
+    save: jest.fn().mockImplementation(anime => Promise.resolve(
+      anime
+    )),
+    findOne: jest.fn().mockImplementation((name,dto)=>Promise.resolve(
+
+      dto
+    )),
+    findOneById: jest.fn().mockImplementation((id,dto)=>Promise.resolve({
+      id,
+      ...dto,
+    })),
+    update: jest.fn((id,dto)=>({
+      id,
+      ...dto,
+    })),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -42,4 +56,20 @@ describe('AnimesService', () => {
     score:8
   });
   });
+  it('should update a anime',async () => {
+    expect(await service.update(1,{
+      name:"Attack on Titan",
+      episode:25,
+      image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+      year:2013,
+      score:8
+    })).toEqual({
+      id: 1,
+      name:"Attack on Titan",
+      episode:25,
+      image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+      year:2013,
+      score:8
+    })
+  })
 });
