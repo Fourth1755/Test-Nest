@@ -4,7 +4,6 @@ import { AnimesService } from './animes.service';
 
 describe('AnimesController', () => {
   let controller: AnimesController;
-  let service: AnimesService;
 
   const mockAnimesService = {
     create: jest.fn(dto=>{
@@ -12,7 +11,11 @@ describe('AnimesController', () => {
         id: Date.now(),
         ...dto
       }
-    })
+    }),
+    update: jest.fn((id,dto)=>({
+      id,
+      ...dto,
+    })),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -27,19 +30,35 @@ describe('AnimesController', () => {
     expect(controller).toBeDefined();
   });
   it('should create a anime', () => {
-    expect(controller.create({
+    const dto = {
       name:"Attack on Titan",
       episode:25,
       image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
       year:2013,
       score:8
-  })).toEqual({
-    id:expect.any(Number),
-    name: 'Attack on Titan',
-    episode:25,
-    image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
-    year:2013,
-    score:8
-  })
+  }
+    expect(controller.create(dto)).toEqual({
+      id:expect.any(Number),
+      name: dto.name,
+      episode: dto.episode,
+      image: dto.image,
+      year: dto.year,
+      score: dto.score,
+    });
+    expect(mockAnimesService.create).toHaveBeenCalledWith(dto)
   });
+  it('should update a anime',()=>{
+    const dto = {
+      name:"Attack on Titan",
+      episode:25,
+      image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+      year:2013,
+      score:8
+    };
+    expect(controller.update('1',dto)).toEqual({
+      id: 1,
+      ...dto
+    });
+    expect(mockAnimesService.update).toHaveBeenCalled();
+  })
 });
