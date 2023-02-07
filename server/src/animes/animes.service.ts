@@ -31,8 +31,17 @@ export class AnimesService {
     return this.animeRepository.findOneById(id);
   }
 
-  update(id: number, updateAnimeDto: UpdateAnimeDto) {
-    return `This action updates a #${id} anime`;
+  async update(id: number, updateAnimeDto: UpdateAnimeDto) {
+    const animeExist = await this.animeRepository.findOne({
+      where:{
+        id:id
+      },
+    });
+    if(animeExist){
+      return await this.animeRepository.update(id,updateAnimeDto)
+    }else{
+      return `Can't find a #${id} anime`;
+    }
   }
 
   remove(id: number) {
