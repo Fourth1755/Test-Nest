@@ -20,15 +20,25 @@ export class AnimesService {
     if(animeExist){
       return animeExist;
     }
-    return await this.animeRepository.save(createAnimeDto);
+    const newAnime = this.animeRepository.create(createAnimeDto)
+    return await this.animeRepository.save(newAnime);
   }
 
   findAll() {
     return this.animeRepository.find();
   }
 
-  findOne(id: number) {
-    return this.animeRepository.findOneById(id);
+  async findOne(id: number) {
+    const animeExist = await this.animeRepository.findOne({
+      where:{
+        id:id
+      },
+    });
+    if(animeExist){
+      return animeExist
+    }else{
+      return `Can't find a #${id} anime`;
+    }
   }
 
   async update(id: number, updateAnimeDto: UpdateAnimeDto) {
@@ -44,7 +54,16 @@ export class AnimesService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} anime`;
+  async remove(id: number) {
+    const animeExist = await this.animeRepository.findOne({
+      where:{
+        id:id
+      },
+    });
+    if(animeExist){
+      return await this.animeRepository.delete(id)
+    }else{
+      return `Can't find a #${id} anime`;
+    }
   }
 }
