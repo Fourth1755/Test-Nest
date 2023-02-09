@@ -53,12 +53,13 @@ export class AnimesService {
 
   async remove(id: number) {
     try {
-      const animeExist = await this.animeRepository.findOne({
+      const animeExist = await this.animeRepository.findOneOrFail({
         where:{
           id:id
         },
       });
-      return await this.animeRepository.delete(id)
+      await this.animeRepository.delete(id)
+      return `Delete a ${id} anime successed`
     } catch (error) {
       throw error
     }

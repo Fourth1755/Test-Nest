@@ -57,6 +57,7 @@ describe('AnimesService', () => {
       id,
       ...dto,
     })),
+    delete: jest.fn((id)=>id)
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -113,5 +114,10 @@ describe('AnimesService', () => {
       year:2013,
       score:8
     })
+  })
+  it('should delete anime by id',async () => {
+    expect(await service.remove(1)).toEqual(
+      'Delete a 1 anime successed'
+    )
   })
 });
