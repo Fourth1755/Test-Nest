@@ -13,6 +13,26 @@ describe('AnimesService', () => {
     save: jest.fn().mockImplementation(anime => Promise.resolve(
       anime
     )),
+    find: jest.fn().mockImplementation(()=>Promise.resolve(
+      [
+        {
+            "id": 1,
+            "name": "Tokyo Revengers: Seiya Kessen-hen",
+            "episode": 13,
+            "image": "https://cdn.myanimelist.net/images/anime/1773/132313.jpg",
+            "year": 2022,
+            "score": 9
+        },
+        {
+            "id": 2,
+            "name": "Attack on Titan",
+            "episode": 25,
+            "image": "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+            "year": 2013,
+            "score": 8
+        },
+    ]
+    )),
     findOne: jest.fn().mockImplementation(({where:{name,id}},dto)=>{
       if(id==1){
         return Promise.resolve({
@@ -105,6 +125,28 @@ describe('AnimesService', () => {
       score:8
     })
   })
+  it('should get all anime',async () => {
+    expect(await service.findAll()).toEqual(
+      [
+        {
+            "id": 1,
+            "name": "Tokyo Revengers: Seiya Kessen-hen",
+            "episode": 13,
+            "image": "https://cdn.myanimelist.net/images/anime/1773/132313.jpg",
+            "year": 2022,
+            "score": 9
+        },
+        {
+            "id": 2,
+            "name": "Attack on Titan",
+            "episode": 25,
+            "image": "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+            "year": 2013,
+            "score": 8
+        },
+    ]
+    )
+  })
   it('should get anime by id',async () => {
     expect(await service.findOne(1)).toEqual({
       id: 1,
@@ -116,8 +158,9 @@ describe('AnimesService', () => {
     })
   })
   it('should delete anime by id',async () => {
-    expect(await service.remove(1)).toEqual(
-      'Delete a 1 anime successed'
+    const id=1
+    expect(await service.remove(id)).toEqual(
+      `Delete a ${id} anime successed`
     )
   })
 });
