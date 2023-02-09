@@ -39,6 +39,20 @@ describe('AnimesService', () => {
         })
       }
     }),
+    findOneOrFail: jest.fn().mockImplementation(({where:{name,id}})=>{
+      if(id==1){
+        return Promise.resolve({
+          id: 1,
+          name:"Attack on Titan",
+          episode:25,
+          image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+          year:2013,
+          score:8
+        })
+      }else{
+        return 'error'
+      }
+    }),
     update: jest.fn((id,dto)=>({
       id,
       ...dto,
@@ -99,6 +113,5 @@ describe('AnimesService', () => {
       year:2013,
       score:8
     })
-    
   })
 });
