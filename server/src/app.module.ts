@@ -5,6 +5,8 @@ import { AnimesModule } from './animes/animes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Anime } from './animes/entities/anime.entity';
 import { TagsModule } from './tags/tags.module';
+import { AccountsModule } from './accounts/accounts.module';
+import { Account } from './accounts/entities/account.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -14,9 +16,9 @@ import { TagsModule } from './tags/tags.module';
     username: 'root',
     password: '',
     database: 'testnest',
-    entities: [Anime],
+    entities: [Anime,Account],
     synchronize: true,
-  }),AnimesModule, TagsModule],
+  }),AnimesModule, TagsModule, AccountsModule],
   controllers: [AppController],
   providers: [AppService],
 })
