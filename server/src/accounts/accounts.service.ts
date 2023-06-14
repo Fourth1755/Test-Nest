@@ -7,6 +7,9 @@ export class AccountsService {
   create(createAccountDto: CreateAccountDto) {
     return 'This action adds a new account';
   }
+  addAnime(createAccountDto: CreateAccountDto) {
+    return 'This action adds a new account';
+  }
 
   findAll() {
     return `This action returns all accounts`;
