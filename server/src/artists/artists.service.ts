@@ -28,15 +28,40 @@ export class ArtistsService {
     return this.artistRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} artist`;
+  async findOne(id: number): Promise<Artist>{
+    try {
+      const artistExist=await this.artistRepository.findOneOrFail({
+        where:{
+          id:id
+        },
+      });
+      return artistExist;
+    } catch (error) {
+      throw error
+    }
   }
 
-  update(id: number, updateArtistDto: UpdateArtistDto) {
-    return `This action updates a #${id} artist`;
+  async update(id: number, updateArtistDto: UpdateArtistDto) {
+    const artistExist = await this.artistRepository.findOneById(id);
+    if(artistExist){
+      await this.artistRepository.update(id,updateArtistDto)
+      return await this.artistRepository.findOneById(id);
+    }else{
+      return `Can't find a #${id} artist`;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} artist`;
+  async remove(id: number) {
+    try {
+      const animeExist = await this.artistRepository.findOneOrFail({
+        where:{
+          id:id
+        },
+      });
+      await this.artistRepository.delete(id)
+      return `Delete a ${id} artist successed`
+    } catch (error) {
+      throw error
+    }
   }
 }
