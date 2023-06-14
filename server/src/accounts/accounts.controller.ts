@@ -12,6 +12,11 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
+  @Post()
+  addAnime(@Body() createAccountDto: CreateAccountDto) {
+    return this.accountsService.addAnime(createAccountDto);
+  }
+
   @Get()
   findAll() {
     return this.accountsService.findAll();
