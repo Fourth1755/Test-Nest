@@ -5,11 +5,24 @@ import { AccountsService } from './accounts.service';
 describe('AccountsController', () => {
   let controller: AccountsController;
 
+  const mockAccountService = {
+    create: jest.fn(dto=>{
+      return {
+        id: Date.now(),
+        ...dto
+      }
+    }),
+    update: jest.fn((id,dto)=>({
+      id,
+      ...dto,
+    })),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AccountsController],
       providers: [AccountsService],
-    }).compile();
+    }).overrideProvider(AccountsService).useValue(mockAccountService).compile();
 
     controller = module.get<AccountsController>(AccountsController);
   });
