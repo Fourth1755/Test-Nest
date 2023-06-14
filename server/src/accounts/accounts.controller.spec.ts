@@ -30,4 +30,7 @@ describe('AccountsController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+  it('should add anime and return account',()=>{
+    expect(controller.addAnime)
+  })
 });
