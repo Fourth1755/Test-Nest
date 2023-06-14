@@ -7,6 +7,8 @@ import { Anime } from './animes/entities/anime.entity';
 import { TagsModule } from './tags/tags.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { Account } from './accounts/entities/account.entity';
+import { ArtistsModule } from './artists/artists.module';
+import { Artist } from './artists/entities/artist.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -16,9 +18,9 @@ import { Account } from './accounts/entities/account.entity';
     username: 'root',
     password: '',
     database: 'testnest',
-    entities: [Anime,Account],
+    entities: [Anime,Account,Artist],
     synchronize: true,
-  }),AnimesModule, TagsModule, AccountsModule],
+  }),AnimesModule, TagsModule, AccountsModule, ArtistsModule],
   controllers: [AppController],
   providers: [AppService],
 })
