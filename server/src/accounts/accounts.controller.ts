@@ -12,9 +12,9 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
-  @Post()
-  addAnime(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountsService.addAnime(createAccountDto);
+  @Patch(':id')
+  addAnime(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
+    return this.accountsService.addAnime(updateAccountDto);
   }
 
   @Get()
